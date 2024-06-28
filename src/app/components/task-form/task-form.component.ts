@@ -11,6 +11,7 @@ export class TaskFormComponent implements OnInit {
   }
   addTask() {
     if (this.newTask.trim() !== '') {
+      console.log("New task:" + this.newTask);
       this.tasks.push(this.newTask);
       this.newTask = '';
     }
