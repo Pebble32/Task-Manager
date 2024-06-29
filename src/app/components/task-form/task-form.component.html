@@ -8,6 +8,15 @@
         type="text"
         placeholder="Add task"
       />
+      <select
+        [(ngModel)]="newTaskPriority"
+        name="newTaskPriority"
+        class="ml-3 bg-transparent border-none text-gray-700 py-1 px-2 leading-tight focus:outline-none"
+      >
+        <option *ngFor="let priority of PriorityEnum | keyvalue" [ngValue]="priority.value">
+          {{ priority.value }}
+        </option>
+      </select>
       <button
         type="button"
         (click)="addTask()"

@@ -1,40 +1,43 @@
-<div *ngIf="tasks.length > 0" class="container mx-auto py-4">
-  <div *ngFor="let task of tasks" class="w-1/4 bg-gray-100 p-4 mb-4 rounded-lg">
-    <ul>
-      <li [class.line-through]="task.completed" class="flex items-center justify-between text-gray-800">{{ task.name }}
-        <div class="flex items-center justify-end">
-          <span (click)="removeTask(task)" style="cursor: pointer">
-            <svg
-              class="h-8 w-8 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </span>
-          <span (click)="toggleComplete(task)" style="cursor: pointer">
-            <svg
-            class="h-8 w-8 text-green-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </span>
-        </div>
-      </li>
-    </ul>
+<div class="container mx-auto py-4">
+  <div class="mb-4">
+    <label for="priority" class="block text-gray-700">Filter by Priority:</label>
+    <select id="priority" [(ngModel)]="selectedPriority" (change)="onPriorityChange()"
+            class="appearance-none bg-transparent border-none text-gray-700 py-1 px-2 leading-tight focus:outline-none">
+      <option value="">All</option>
+      <option [ngValue]="PriorityEnum.one">Low</option>
+      <option [ngValue]="PriorityEnum.two">Medium</option>
+      <option [ngValue]="PriorityEnum.three">High</option>
+    </select>
+  </div>
+
+  <div *ngIf="filteredTasks.length > 0">
+    <div *ngFor="let task of filteredTasks" class="w-1/4 bg-gray-100 p-4 mb-4 rounded-lg">
+      <ul>
+        <li [class.line-through]="task.completed" class="flex items-center justify-between text-gray-800">
+          <div>
+            <span class="font-bold">{{ task.name }}</span> - 
+            <span [ngClass]="{
+              'text-red-500': task.priority === 'High',
+              'text-yellow-500': task.priority === 'Medium',
+              'text-green-500': task.priority === 'Low'
+            }">{{ task.priority }}</span>
+          </div>
+          <div class="flex items-center justify-end">
+            <span (click)="removeTask(task)" style="cursor: pointer">
+              <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <span (click)="toggleComplete(task)" style="cursor: pointer">
+              <svg class="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
